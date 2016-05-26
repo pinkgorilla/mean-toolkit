@@ -10,7 +10,7 @@ var initialized = false;
                 this.find(query).limit(1).next()
                     .then(data => {
                         if (!data)
-                            reject(this.collectionName + ': data not found');
+                            reject(this.s.name + ': data not found');
                         resolve(data);
                     })
                     .catch(e => reject(e));
@@ -33,10 +33,10 @@ var initialized = false;
                     .insertOne(data)
                     .then(result => {
                         if (result.insertedCount < 1)
-                            reject(this.collectionName + ": failed to insert");
+                            reject(this.s.name + ": failed to insert");
                         else {
                             var id = result.insertedId;
-                            this.dbSingle(collectionName, { _id: id })
+                            this.dbSingle({ _id: id })
                                 .then(data => {
                                     resolve(data);
                                 })
@@ -68,7 +68,7 @@ var initialized = false;
                             delete updateObject._id;
                             this.updateOne(query, { $set: updateObject })
                                 .then(result => {
-                                    this.dbSingle(collectionName, query)
+                                    this.dbSingle(query)
                                         .then(redoc => {
                                             resolve(redoc);
                                         })
