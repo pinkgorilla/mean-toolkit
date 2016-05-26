@@ -1,3 +1,5 @@
+require('./src/mongodb/collection-ext');
+
 module.exports = {
     passport: {
         local: require('./src/passport/passport-local'),
@@ -10,8 +12,4 @@ module.exports = {
     },
     Manager: require('./src/manager'),
     Service: require('./src/service')
-}
-
-var mongo = require('mongodb');
-var Collection = mongo.Collection;
-console.log(Collection);
+} 
