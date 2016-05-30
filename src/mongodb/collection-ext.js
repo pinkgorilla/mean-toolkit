@@ -2,7 +2,7 @@ var initialized = false;
 (function () {
 
     var Collection = require('mongodb').Collection;
-    
+
     if (Collection && !initialized) {
 
         Collection.prototype.dbSingle = function (query) {
@@ -46,36 +46,23 @@ var initialized = false;
                     .catch(e => reject(e));
             });
         };
-        
+
         Collection.prototype.dbUpdate = function (query, updateObject, skipStampCheck) {
 
             return new Promise((resolve, reject) => {
 
                 this.dbSingle(query)
                     .then(doc => {
-                        if (!skipStampCheck && doc._stamp != updateObject._stamp)
-                            reject('stamp mismatch');
-                        else {
-                            var CapitalModels = require('capital-models');
-                            if (CapitalModels) {
-                                var Base = CapitalModels.Base;
-
-                                if (updateObject instanceof Base) {
-                                    updateObject.stamp('', '');
-                                }
-                            }
-
-                            delete updateObject._id;
-                            this.updateOne(query, { $set: updateObject })
-                                .then(result => {
-                                    this.dbSingle(query)
-                                        .then(redoc => {
-                                            resolve(redoc);
-                                        })
-                                        .catch(e => reject(e));
-                                })
-                                .catch(e => reject(e));
-                        }
+                        delete updateObject._id;
+                        this.updateOne(query, { $set: updateObject })
+                            .then(result => {
+                                this.dbSingle(query)
+                                    .then(redoc => {
+                                        resolve(redoc);
+                                    })
+                                    .catch(e => reject(e));
+                            })
+                            .catch(e => reject(e));
                     })
                     .catch(e => reject(e));
             });
