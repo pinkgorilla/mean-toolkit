@@ -1,6 +1,6 @@
 {
   "name": "mean-toolkit",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "toolki",
   "main": "index.js",
   "scripts": {
@@ -18,8 +18,6 @@
   "homepage": "https://github.com/pinkgorilla/mean-toolkit#readme",
   "dependencies": {
     "express": "^4.13.4",
-    "mongo-factory": "^1.0.0",
-    "mongodb": "*",
     "passport": "^0.3.2",
     "passport-jwt": "^2.0.0",
     "passport-local": "^1.0.0"

@@ -5,15 +5,44 @@ var initialized = false;
 
     if (Collection && !initialized) {
 
+
+        Collection.prototype.dbFirst = function (query) {
+            return new Promise((resolve, reject) => {
+
+                this.find(Object.assign({}, query))
+                    .limit(1)
+                    .next()
+                    .then(data => {
+                        if (!data)
+                            reject(this.s.name + ': no item in the collection');
+                        resolve(data);
+                    })
+                    .catch(e => {
+                        reject(e);
+                    });
+            });
+        };
+
+        Collection.prototype.dbFirstOrDefault = function (query) {
+            return new Promise((resolve, reject) => {
+                this.dbFirst(query)
+                    .then(data => {
+                        resolve(data);
+                    })
+                    .catch(e => resolve(null));
+            });
+        }
+
+
         Collection.prototype.dbSingle = function (query) {
             return new Promise((resolve, reject) => {
-                this.find(query).limit(1).next()
+                this.dbFirst(query)
                     .then(data => {
                         if (!data)
                             reject(this.s.name + ': data not found');
                         resolve(data);
                     })
-                    .catch(e => reject(e));
+                    .catch(e => resolve(null));
             });
         };
 
@@ -26,6 +55,7 @@ var initialized = false;
                     .catch(e => resolve(null));
             });
         };
+
         Collection.prototype.dbInsert = function (data) {
             return new Promise((resolve, reject) => {
 

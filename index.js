@@ -6,10 +6,8 @@ module.exports = {
         jwt: require('./src/passport/passport-jwt')
     },
     middlewares: {
-        enableCors: require('./src/middlewares/enable-cors'),
-        errorFormatter: require('./src/middlewares/error-formatter'),
-        resultFormatter: require('./src/middlewares/result-formatter')
+        enableCors: require('./src/middlewares/enable-cors')
     },
     Manager: require('./src/manager'),
-    Service: require('./src/service')
+    Controller: require('./src/controller')
 } 
