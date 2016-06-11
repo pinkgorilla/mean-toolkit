@@ -1,2 +1,2 @@
 # mean-toolkit
-toolki
+toolkit
