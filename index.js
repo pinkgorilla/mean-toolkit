@@ -1,5 +1,3 @@
-require('./src/mongodb/collection-ext');
-
 module.exports = {
     passport: {
         local: require('./src/passport/passport-local'),
